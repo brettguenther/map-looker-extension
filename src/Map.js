@@ -38,6 +38,35 @@ const locations = [
   { lat: 39.7392, lng: -104.9903 }, // Denver, CO
 ]
 
+// Common style for the overlay widgets
+const widgetStyle = {
+  width: '300px', // Width of each widget
+  height: '150px', // Height of each widget
+  backgroundColor: 'white',
+  padding: '10px',
+  borderRadius: '8px',
+  boxShadow: '0 4px 8px rgba(0,0,0,0.2)', // Subtle shadow for depth
+  zIndex: 10, // Ensure it's above the map
+  display: 'flex', // Use flexbox for centering content if needed
+  alignItems: 'center', // Center vertically
+  justifyContent: 'center', // Center horizontally
+  overflow: 'hidden', // Hide any overflow from the visualization
+  pointerEvents: 'auto', // Make the widget itself interactive
+}
+
+// Style for the container holding all widgets
+const widgetContainerStyle = {
+  position: 'absolute',
+  top: '20px', // Distance from the top
+  left: '0',
+  right: '0',
+  display: 'flex',
+  justifyContent: 'space-evenly', // Evenly spaced horizontally
+  alignItems: 'flex-start', // Align items to the top of the flex container
+  padding: '0 20px', // Add some padding on the sides
+  pointerEvents: 'none', // Allow map interaction through this container's empty space
+}
+
 export const GMap = () => {
   const coreSDK = getCore40SDK()
 
@@ -62,30 +91,30 @@ export const GMap = () => {
           ))}
         </Map>
 
-        {/* This div is the overlay widget */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '20px', // Distance from the top
-            left: '20px', // Distance from the left
-            width: '300px', // Width of the widget
-            height: '150px', // Height of the widget
-            backgroundColor: 'white',
-            padding: '10px',
-            borderRadius: '8px',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.2)', // Subtle shadow for depth
-            zIndex: 10, // Ensure it's above the map
-            display: 'flex', // Use flexbox for centering content if needed
-            alignItems: 'center', // Center vertically
-            justifyContent: 'center', // Center horizontally
-            overflow: 'hidden' // Hide any overflow from the visualization
-          }}
-        >
-          <DataProvider sdk={coreSDK}>
-            <Query query="ViCIjWdbSQ8FO3IJPAAf6v" config={{ type: 'single_value' }}>
-              <Visualization />
-            </Query>
-          </DataProvider>
+        <div style={widgetContainerStyle}>
+          <div style={widgetStyle}>
+            <DataProvider sdk={coreSDK}>
+              <Query query="ViCIjWdbSQ8FO3IJPAAf6v" config={{ type: 'single_value' }}>
+                <Visualization />
+              </Query>
+            </DataProvider>
+          </div>
+
+          <div style={widgetStyle}>
+            <DataProvider sdk={coreSDK}>
+              <Query query="qzSb2m3N8fjrU0ODpxUt9X" config={{ type: 'single_value' }}>
+                <Visualization />
+              </Query>
+            </DataProvider>
+          </div>
+
+          <div style={widgetStyle}>
+            <DataProvider sdk={coreSDK}>
+              <Query query="wed2qe2TQN39fz1jKXZbFb" config={{ type: 'single_value' }}>
+                <Visualization />
+              </Query>
+            </DataProvider>
+          </div>
         </div>
       </div>
     </APIProvider>
